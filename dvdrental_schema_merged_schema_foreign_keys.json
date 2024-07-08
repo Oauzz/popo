@@ -1,0 +1,46 @@
+{
+    "customer": [
+        "public.address(address_id)"
+    ],
+    "actor": [],
+    "category": [],
+    "film": [
+        "public.language(language_id)"
+    ],
+    "film_actor": [
+        "public.actor(actor_id)",
+        "public.film(film_id)"
+    ],
+    "film_category": [
+        "public.category(category_id)",
+        "public.film(film_id)"
+    ],
+    "address": [
+        "public.city(city_id)"
+    ],
+    "city": [
+        "public.country(country_id)"
+    ],
+    "country": [],
+    "inventory": [
+        "public.film(film_id)"
+    ],
+    "language": [],
+    "payment": [
+        "public.customer(customer_id)",
+        "public.rental(rental_id)",
+        "public.staff(staff_id)"
+    ],
+    "rental": [
+        "public.customer(customer_id)",
+        "public.inventory(inventory_id)",
+        "public.staff(staff_id)"
+    ],
+    "staff": [
+        "public.address(address_id)"
+    ],
+    "store": [
+        "public.address(address_id)",
+        "public.staff(staff_id)"
+    ]
+}
