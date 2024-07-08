@@ -1,46 +1,46 @@
 {
     "customer": [
-        "public.address(address_id)"
+        "address"
     ],
     "actor": [],
     "category": [],
     "film": [
-        "public.language(language_id)"
+        "language"
     ],
     "film_actor": [
-        "public.actor(actor_id)",
-        "public.film(film_id)"
+        "actor",
+        "film"
     ],
     "film_category": [
-        "public.category(category_id)",
-        "public.film(film_id)"
+        "category",
+        "film"
     ],
     "address": [
-        "public.city(city_id)"
+        "city"
     ],
     "city": [
-        "public.country(country_id)"
+        "country"
     ],
     "country": [],
     "inventory": [
-        "public.film(film_id)"
+        "film"
     ],
     "language": [],
     "payment": [
-        "public.customer(customer_id)",
-        "public.rental(rental_id)",
-        "public.staff(staff_id)"
+        "customer",
+        "rental",
+        "staff"
     ],
     "rental": [
-        "public.customer(customer_id)",
-        "public.inventory(inventory_id)",
-        "public.staff(staff_id)"
+        "customer",
+        "inventory",
+        "staff"
     ],
     "staff": [
-        "public.address(address_id)"
+        "address"
     ],
     "store": [
-        "public.address(address_id)",
-        "public.staff(staff_id)"
+        "address",
+        "staff"
     ]
 }

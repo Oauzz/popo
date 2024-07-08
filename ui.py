@@ -56,15 +56,11 @@ class DummyDbCreatorApp(QMainWindow, Ui_MainWindow):
             QApplication.processEvents()
 
     def extract_and_merge_scripts(self, schema_file):
-        table_statements, base_name = extract_scripts.run(schema_file)
-        if table_statements is None or base_name is None:
+        base_name = extract_scripts.run(schema_file)
+        if base_name is None:
             logging.error("Failed to extract and merge scripts.")
         else:
-            # Save the merged schema file
             merged_schema_file = f"{base_name}_merged_schema.sql"
-            with open(merged_schema_file, 'w') as f:
-                for table_name, stmt in table_statements.items():
-                    f.write(stmt + "\n\n")
             logging.info(f"Merged CREATE TABLE statements written to {merged_schema_file}")
 
     def extract_foreign_keys(self, merged_schema_file):
