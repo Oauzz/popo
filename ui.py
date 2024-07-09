@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from templates.main_ui import Ui_MainWindow
-from tasks import create_db, export_schema, import_schema, extract_scripts, extract_foreign_keys, determine_order
+from tasks import create_db, export_schema, import_schema, extract_scripts, extract_foreign_keys, extract_columns_types, determine_order, generate_dummy_data
 import logging
 
 class DummyDbCreatorApp(QMainWindow, Ui_MainWindow):
@@ -38,13 +38,18 @@ class DummyDbCreatorApp(QMainWindow, Ui_MainWindow):
         }
 
         schema_file = f"{source_db_info['name']}_schema.sql"
-        
+        columns_types_file = f"{source_db_info['name']}_schema_merged_schema_columns_types.json"
+        foreign_keys_file = f"{source_db_info['name']}_schema_merged_schema_foreign_keys.json"
+        order_file = f"{source_db_info['name']}_schema_merged_schema_foreign_keys_table_creation_order.txt"
+
         steps = [
             lambda: create_db.run(new_db_info),
             lambda: export_schema.run(source_db_info),
             lambda: self.extract_and_merge_scripts(schema_file),
             lambda: self.extract_foreign_keys(f"{source_db_info['name']}_schema_merged_schema.sql"),
+            lambda: self.extract_columns_types(f"{source_db_info['name']}_schema_merged_schema.sql"),
             lambda: self.determine_table_order(f"{source_db_info['name']}_schema_merged_schema_foreign_keys.json"),
+            lambda: self.generate_dummy_data(columns_types_file, foreign_keys_file, order_file),
             lambda: import_schema.run(new_db_info, source_db_info['name']),
             # Add other steps here
         ]
@@ -66,8 +71,14 @@ class DummyDbCreatorApp(QMainWindow, Ui_MainWindow):
     def extract_foreign_keys(self, merged_schema_file):
         extract_foreign_keys.run(merged_schema_file)
 
+    def extract_columns_types(self, merged_schema_file):
+        extract_columns_types.run(merged_schema_file)
+
     def determine_table_order(self, foreign_keys_file):
         determine_order.run(foreign_keys_file)
+
+    def generate_dummy_data(self, columns_types_file, foreign_keys_file, order_file):
+        generate_dummy_data.run(columns_types_file, foreign_keys_file, order_file)
 
 class QtHandler(logging.Handler):
     def __init__(self, text_edit):
